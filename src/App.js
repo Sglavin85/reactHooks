@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Toggle from './Toggle';
+import useTitleInput from './useTitleInput'
 
 const App = () => {
   // use State Defined parameters
   // const [value, setValue] = useState(initialState);
+  // const [name, setName] = useState('');
 
-  const [name, setName] = useState('');
+  // useEffect runs after each render
+  // useEffect(() => {
+  //   document.title = name;
+  // })
+
+
+  //imported custom hook
+  const [name, setName] = useTitleInput('')
 
   return (
     <div className="main-wrapper">
@@ -13,7 +22,6 @@ const App = () => {
       <Toggle />
       <form onSubmit={(e) => {
         e.preventDefault();
-        formSubmit(name, setName);
       }}>
         <input
           type="text"
@@ -25,8 +33,8 @@ const App = () => {
   );
 };
 
-const formSubmit = (value, setValue) => {
-  console.log(`email sent to ${value}!`);
-  setValue('');
-}
+// const formSubmit = (value, setValue) => {
+//   console.log(`email sent to ${value}!`);
+//   setValue('');
+// }
 export default App;
