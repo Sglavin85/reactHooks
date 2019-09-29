@@ -1,6 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, createContext } from 'react';
 import Toggle from './Toggle';
 import useTitleInput from './useTitleInput'
+
+export const UserContext = createContext();
 
 const App = () => {
   // use State Defined parameters
@@ -20,6 +22,10 @@ const App = () => {
   console.log("ref", ref.current)
 
   return (
+    // <UserContext.Provider
+    //   value={{
+    //     user: true
+    //   }}>
     <div className="main-wrapper" ref={ref}>
       <h1 onClick={() => ref.current.classList.add("new-fake-class")}>Level Up Dishes</h1>
       <Toggle />
@@ -33,6 +39,7 @@ const App = () => {
         <button>SUBMIT</button>
       </form>
     </div>
+    // </UserContext.Provider>
   );
 };
 
