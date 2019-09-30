@@ -1,5 +1,6 @@
 import React, { useRef, createContext } from 'react';
 import Toggle from './Toggle';
+import Counter from './Counter'
 import useTitleInput from './useTitleInput'
 
 export const UserContext = createContext();
@@ -29,6 +30,7 @@ const App = () => {
     <div className="main-wrapper" ref={ref}>
       <h1 onClick={() => ref.current.classList.add("new-fake-class")}>Level Up Dishes</h1>
       <Toggle />
+      <Counter />
       <form onSubmit={(e) => {
         e.preventDefault();
       }}>
