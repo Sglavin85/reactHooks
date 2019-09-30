@@ -1,47 +1,31 @@
-import React, { useRef, createContext, useMemo } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Toggle from './Toggle';
 // import Counter from './Counter'
-import useTitleInput from './useTitleInput'
-
-export const UserContext = createContext();
+import useTitleInput from './hooks/useTitleInput'
 
 const App = () => {
-  // use State Defined parameters
-  // const [value, setValue] = useState(initialState);
-  // const [name, setName] = useState('');
-
-  // useEffect runs after each render
-  // useEffect(() => {
-  //   document.title = name;
-  // })
-
-
   //imported custom hook
   const [name, setName] = useTitleInput('');
-
   const ref = useRef();
-  // console.log("ref", ref.current)
+  const [dishes, setDishes] = useState([]);
 
-  const reverseWord = (word) => {
-    console.log("Fx Called")
-    return word.split('').reverse().join('');
-  };
+  const fetchDishes = async () => {
+    const res = await fetch(
+      "https://my-json-server.typicode.com/leveluptuts/fakeapi/dishes"
+    );
+    const data = await res.json();
+    setDishes(data)
+  }
 
-  //useMemo should be thought of at "Should function run" in this case, if the variable title change the function runs. Therefore on mount the function will run, however un rerenders during typing in the input box the function does not run.
-  // const title = "Sean Glavin"
-  // const titleReversed = useMemo(() => reverseWord(title), [title]);
-
-
+  //using an empty array as the second parameter makes use effect only run on mount effectively turning it into componentDidMount -- ** HOWEVER ** React DOCS stress not to use it like this
+  useEffect(() => {
+    fetchDishes();
+  }, [])
 
   return (
-    // <UserContext.Provider
-    //   value={{
-    //     user: true
-    //   }}>
     <div className="main-wrapper" ref={ref}>
       <h1 onClick={() => ref.current.classList.add("new-fake-class")}>Sean Glavin</h1>
       <Toggle />
-      {/* <Counter /> */}
       <form onSubmit={(e) => {
         e.preventDefault();
       }}>
@@ -51,13 +35,18 @@ const App = () => {
           value={name} />
         <button>SUBMIT</button>
       </form>
+      {dishes.map(dish => (
+        <article className="dish-card dish-card--withImage" >
+          <h3>{dish.name}</h3>
+          <p>{dish.desc}</p>
+          <div class="ingredients">
+            {dish.ingredients.map(ingredient => (
+              <span>{ingredient}</span>
+            ))}
+          </div>
+        </article>
+      ))}
     </div>
-    // </UserContext.Provider>
   );
 };
-
-// const formSubmit = (value, setValue) => {
-//   console.log(`email sent to ${value}!`);
-//   setValue('');
-// }
 export default App;

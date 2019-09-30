@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { UserContext } from './App'
+import DishForm from './DishForm'
+// import { UserContext } from './App'
 
 const Toggle = () => {
     const [isToggled, setToggle] = useState(false);
@@ -10,7 +11,7 @@ const Toggle = () => {
     return (
         <div>
             <button onClick={() => setToggle(!isToggled)}>Toggle</button>
-            {isToggled && <h2>Hello</h2>}
+            {isToggled && <DishForm />}
         </div>
     )
 }
